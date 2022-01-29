@@ -13,10 +13,10 @@ def knapSack(W, wt, profit, n):
                               K[i - 1][w])
             else:
                 K[i][w] = K[i - 1][w]
-    for i in range(n + 1):
-        for w in range(W + 1):
-            print(K[i][w], end="")
-        print("\n") # To print the table
+    '''for i in range(n + 1):
+          for w in range(W + 1):
+             print(K[i][w], end="")
+         print("\n")''' # To print the table
 
     res = K[n][W]
     print("Maximum Profit: ", res)
