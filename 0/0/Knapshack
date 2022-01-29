@@ -1,0 +1,58 @@
+def knapSack(W, wt, profit, n):
+    jobs=[i+1 for i in range(n)]
+    K = [[0 for x in range(W + 1)] for x in range(n + 1)]
+
+    # Build table K[][] in bottom up manner
+    for i in range(n + 1):
+        for w in range(W + 1):
+            if i == 0 or w == 0:
+                K[i][w] = 0
+            elif wt[i - 1] <= w:
+                K[i][w] = max(profit[i - 1]
+                              + K[i - 1][w - wt[i - 1]],
+                              K[i - 1][w])
+            else:
+                K[i][w] = K[i - 1][w]
+    for i in range(n + 1):
+        for w in range(W + 1):
+            print(K[i][w], end="")
+        print("\n") # To print the table
+
+    res = K[n][W]
+    print("Maximum Profit: ", res)
+    print("Items in the bag: ", end="")
+    w = W
+    for i in range(n, 0, -1):
+        if res <= 0:
+            break
+        # either the result comes from the
+        # top (K[i-1][w]) or from (val[i-1]
+        # + K[i-1] [w-wt[i-1]]) as in Knapsack
+        # table. If it comes from the latter
+        # one/ it means the item is included.
+        if res == K[i - 1][w]:
+            continue
+        else:
+
+            # This item is included.
+            print(jobs[i - 1], end=" ")
+
+            # Since this weight is included
+            # its value is deducted
+            res = res - profit[i - 1]
+            w = w - wt[i - 1]
+
+n = int(input("Enter the number of Objects: "))
+
+profit = []
+for i in range(n):
+    print("Enter profit", i + 1, ": ")
+    profit.append(int(input()))
+wt = []
+for i in range(n):
+    print("Enter weight", i + 1, ": ")
+    wt.append(int(input()))
+W = int(input("Enter the Capacity of the Knapsack: "))
+
+knapSack(W, wt, profit, n)
+
